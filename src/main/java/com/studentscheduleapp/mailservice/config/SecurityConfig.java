@@ -40,14 +40,4 @@ public class SecurityConfig {
                 ).build();
     }
 
-
-    @Bean
-    public RestTemplate restTemplate(){
-        List<ClientHttpRequestInterceptor> interceptors = new ArrayList<ClientHttpRequestInterceptor>();
-        interceptors.add(new HeaderRequestInterceptor());
-        RestTemplate restTemplate = new RestTemplate();
-        restTemplate.setInterceptors(interceptors);
-        return restTemplate;
-    }
-
 }
