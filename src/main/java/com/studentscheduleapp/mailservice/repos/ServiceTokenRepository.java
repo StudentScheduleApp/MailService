@@ -24,7 +24,7 @@ public class ServiceTokenRepository  {
     private RestTemplate restTemplate;
 
     public boolean existsByServiceToken(String serviceToken) throws Exception{
-        ResponseEntity<Void> r = restTemplate.postForEntity(identityService + "/api/user/", new AuthorizeServiceRequest(serviceToken), Void.class);
+        ResponseEntity<Void> r = restTemplate.postForEntity(identityService + "/api/service/authorize", new AuthorizeServiceRequest(serviceToken), Void.class);
         if(r.getStatusCode().is2xxSuccessful())
             return true;
         if(r.getStatusCode().equals(HttpStatus.NOT_FOUND))
