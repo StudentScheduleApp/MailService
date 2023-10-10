@@ -29,8 +29,6 @@ public class ServiceTokenRepository  {
             return true;
         if(r.getStatusCode().equals(HttpStatus.NOT_FOUND))
             return false;
-        if(r.getStatusCode().isError())
-            throw new Exception("request to " + identityService + " return code " + r.getStatusCode());
-        return false;
+        throw new Exception("request to " + identityService + " return code " + r.getStatusCode());
     }
 }
