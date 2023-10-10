@@ -7,6 +7,7 @@ import org.springframework.http.client.ClientHttpRequestInterceptor;
 import org.springframework.http.client.ClientHttpResponse;
 
 import java.io.IOException;
+import java.util.logging.Logger;
 
 public class HeaderRequestInterceptor implements ClientHttpRequestInterceptor {
 
@@ -18,6 +19,7 @@ public class HeaderRequestInterceptor implements ClientHttpRequestInterceptor {
     public ClientHttpResponse intercept(HttpRequest request, byte[] body, ClientHttpRequestExecution execution) throws IOException {
         String headerName = "Service-Token";
         request.getHeaders().set(headerName, serviceTokenValue);
+        Logger.getAnonymousLogger().info(String.valueOf(serviceTokenValue == null));
         return execution.execute(request, body);
     }
 

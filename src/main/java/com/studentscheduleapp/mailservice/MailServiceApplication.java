@@ -8,7 +8,9 @@ import org.springframework.http.client.ClientHttpRequestInterceptor;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.logging.Logger;
 
 @SpringBootApplication
 public class MailServiceApplication {
@@ -18,13 +20,4 @@ public class MailServiceApplication {
 	}
 
 
-
-	@Bean
-	public RestTemplate restTemplate(){
-		List<ClientHttpRequestInterceptor> interceptors = new ArrayList<ClientHttpRequestInterceptor>();
-		interceptors.add(new HeaderRequestInterceptor());
-		RestTemplate restTemplate = new RestTemplate();
-		restTemplate.setInterceptors(interceptors);
-		return restTemplate;
-	}
 }
