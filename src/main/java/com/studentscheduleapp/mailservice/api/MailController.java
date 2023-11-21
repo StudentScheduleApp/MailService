@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.mail.MessagingException;
+import java.util.logging.Logger;
 
 @RestController
 @RequestMapping("api/")
@@ -22,14 +23,19 @@ public class MailController {
     private MailService mailService;
     @PostMapping("send")
     public ResponseEntity<Void> send(@RequestBody SendMailRequest sendMailRequest) {
-        if(sendMailRequest.getEmail() == null || sendMailRequest.getEmail().isEmpty())
+        if(sendMailRequest.getEmail() == null || sendMailRequest.getEmail().isEmpty()) {
+            Logger.getGlobal().info("bad request: " + sendMailRequest.getEmail() + " is null or empty");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
         try {
             mailService.send(sendMailRequest);
+            Logger.getGlobal().info("send email to " + sendMailRequest.getEmail() + " success");
             return ResponseEntity.ok().build();
         } catch (MessagingException e) {
+            Logger.getGlobal().info("send email to " + sendMailRequest.getEmail() + " failed: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }catch (Exception e) {
+            Logger.getGlobal().info("send email to " + sendMailRequest.getEmail() + " failed: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
