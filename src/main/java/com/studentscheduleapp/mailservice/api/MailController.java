@@ -24,7 +24,7 @@ public class MailController {
     @PostMapping("send")
     public ResponseEntity<Void> send(@RequestBody SendMailRequest sendMailRequest) {
         if(sendMailRequest.getEmail() == null || sendMailRequest.getEmail().isEmpty()) {
-            Logger.getGlobal().info("bad request: " + sendMailRequest.getEmail() + " is null or empty");
+            Logger.getGlobal().info("bad request: email is null or empty");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
         try {
