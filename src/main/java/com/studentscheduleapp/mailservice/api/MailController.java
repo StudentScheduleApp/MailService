@@ -15,13 +15,12 @@ import javax.mail.MessagingException;
 import java.util.logging.Logger;
 
 @RestController
-@RequestMapping("api/")
 @RequiredArgsConstructor
 public class MailController {
 
     @Autowired
     private MailService mailService;
-    @PostMapping("send")
+    @PostMapping("${mapping.send}")
     public ResponseEntity<Void> send(@RequestBody SendMailRequest sendMailRequest) {
         if(sendMailRequest.getEmail() == null || sendMailRequest.getEmail().isEmpty()) {
             Logger.getGlobal().info("bad request: email is null or empty");

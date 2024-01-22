@@ -1,6 +1,9 @@
 package com.studentscheduleapp.mailservice.services;
 
 import com.studentscheduleapp.mailservice.models.api.SendMailRequest;
+import com.studentscheduleapp.mailservice.properties.GlobalProperties;
+import com.studentscheduleapp.mailservice.properties.MailProperties;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -16,24 +19,16 @@ import java.util.logging.Logger;
 @Service
 public class MailService {
 
-    @Value("${mail.transport.protocol}")
-    private String protocol;
-    @Value("${mail.smtps.auth}")
-    private String auth;
-    @Value("${mail.smtps.host}")
-    private String host;
-    @Value("${mail.smtps.user}")
-    private String user;
-    @Value("${mail.smtps.password}")
-    private String password;
+    @Autowired
+    private MailProperties mailProperties;
 
     public void send(SendMailRequest sendMailRequest) throws MessagingException {
         final Properties properties = new Properties();
-        properties.setProperty("mail.transport.protocol", protocol);
-        properties.setProperty("mail.smtps.auth", auth);
-        properties.setProperty("mail.smtps.host", host);
-        properties.setProperty("mail.smtps.user", user);
-        properties.setProperty("mail.smtps.password", password);
+        properties.setProperty("mail.transport.protocol", mailProperties.getProtocol());
+        properties.setProperty("mail.smtps.auth", mailProperties.getAuth());
+        properties.setProperty("mail.smtps.host", mailProperties.getHost());
+        properties.setProperty("mail.smtps.user", mailProperties.getUser());
+        properties.setProperty("mail.smtps.password", mailProperties.getPassword());
         Session session = Session.getDefaultInstance(properties);
         MimeMessage message = new MimeMessage(session);
         String from = properties.getProperty("mail.smtps.user");
