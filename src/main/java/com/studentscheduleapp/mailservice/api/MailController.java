@@ -31,9 +31,11 @@ public class MailController {
             Logger.getGlobal().info("send email to " + sendMailRequest.getEmail() + " success");
             return ResponseEntity.ok().build();
         } catch (MessagingException e) {
+            e.printStackTrace();
             Logger.getGlobal().info("send email to " + sendMailRequest.getEmail() + " failed: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }catch (Exception e) {
+            e.printStackTrace();
             Logger.getGlobal().info("send email to " + sendMailRequest.getEmail() + " failed: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
