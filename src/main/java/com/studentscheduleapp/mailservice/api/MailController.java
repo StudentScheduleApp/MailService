@@ -3,6 +3,8 @@ package com.studentscheduleapp.mailservice.api;
 import com.studentscheduleapp.mailservice.models.api.SendMailRequest;
 import com.studentscheduleapp.mailservice.services.MailService;
 import lombok.RequiredArgsConstructor;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,7 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.mail.MessagingException;
-import java.util.logging.Logger;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 
 @RestController
 @RequiredArgsConstructor
@@ -20,23 +23,29 @@ public class MailController {
 
     @Autowired
     private MailService mailService;
+    private static final Logger log = LogManager.getLogger(MailController.class);
+
     @PostMapping("${mapping.send}")
     public ResponseEntity<Void> send(@RequestBody SendMailRequest sendMailRequest) {
         if(sendMailRequest.getEmail() == null || sendMailRequest.getEmail().isEmpty()) {
-            Logger.getGlobal().info("bad request: email is null or empty");
+            log.warn("bad request: email is null or empty");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
         try {
             mailService.send(sendMailRequest);
-            Logger.getGlobal().info("send email to " + sendMailRequest.getEmail() + " success");
+            log.info("send email to " + sendMailRequest.getEmail() + " success");
             return ResponseEntity.ok().build();
         } catch (MessagingException e) {
             e.printStackTrace();
-            Logger.getGlobal().info("send email to " + sendMailRequest.getEmail() + " failed: " + e.getMessage());
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            log.error("send email to " + sendMailRequest.getEmail() + " failed: " + errors);
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }catch (Exception e) {
             e.printStackTrace();
-            Logger.getGlobal().info("send email to " + sendMailRequest.getEmail() + " failed: " + e.getMessage());
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            log.error("send email to " + sendMailRequest.getEmail() + " failed: " + errors);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
