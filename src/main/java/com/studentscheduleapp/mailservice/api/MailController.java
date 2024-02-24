@@ -10,7 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.mail.MessagingException;
@@ -36,13 +35,11 @@ public class MailController {
             log.info("send email to " + sendMailRequest.getEmail() + " success");
             return ResponseEntity.ok().build();
         } catch (MessagingException e) {
-            e.printStackTrace();
             StringWriter errors = new StringWriter();
             e.printStackTrace(new PrintWriter(errors));
             log.error("send email to " + sendMailRequest.getEmail() + " failed: " + errors);
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }catch (Exception e) {
-            e.printStackTrace();
             StringWriter errors = new StringWriter();
             e.printStackTrace(new PrintWriter(errors));
             log.error("send email to " + sendMailRequest.getEmail() + " failed: " + errors);

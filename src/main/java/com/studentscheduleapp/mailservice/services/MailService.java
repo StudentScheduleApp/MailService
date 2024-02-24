@@ -1,10 +1,8 @@
 package com.studentscheduleapp.mailservice.services;
 
 import com.studentscheduleapp.mailservice.models.api.SendMailRequest;
-import com.studentscheduleapp.mailservice.properties.GlobalProperties;
 import com.studentscheduleapp.mailservice.properties.MailProperties;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.mail.Message;
@@ -14,7 +12,6 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.util.Properties;
-import java.util.logging.Logger;
 
 @Service
 public class MailService {

@@ -2,7 +2,6 @@ package com.studentscheduleapp.mailservice.services;
 
 import com.studentscheduleapp.mailservice.properties.GlobalProperties;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service

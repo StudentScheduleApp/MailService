@@ -42,12 +42,10 @@ public class ServiceTokenFilter extends GenericFilterBean {
                 appInfoToken.setAuthenticated(true);
                 appInfoToken.setServiceName("service");
                 SecurityContextHolder.getContext().setAuthentication(appInfoToken);
-                logger.info("authorize service success");
             }
             else
                 logger.info("authorize service failed: invalid token " + token);
         } catch (Exception e) {
-            e.getStackTrace();
             StringWriter errors = new StringWriter();
             e.printStackTrace(new PrintWriter(errors));
             logger.error("authorize service failed: " + errors);
