@@ -20,13 +20,13 @@ import java.io.StringWriter;
 @RequiredArgsConstructor
 public class MailController {
 
+    private static final Logger log = LogManager.getLogger(MailController.class);
     @Autowired
     private MailService mailService;
-    private static final Logger log = LogManager.getLogger(MailController.class);
 
     @PostMapping("${mapping.send}")
     public ResponseEntity<Void> send(@RequestBody SendMailRequest sendMailRequest) {
-        if(sendMailRequest.getEmail() == null || sendMailRequest.getEmail().isEmpty()) {
+        if (sendMailRequest.getEmail() == null || sendMailRequest.getEmail().isEmpty()) {
             log.warn("bad request: email is null or empty");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
@@ -39,7 +39,7 @@ public class MailController {
             e.printStackTrace(new PrintWriter(errors));
             log.error("send email to " + sendMailRequest.getEmail() + " failed: " + errors);
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }catch (Exception e) {
+        } catch (Exception e) {
             StringWriter errors = new StringWriter();
             e.printStackTrace(new PrintWriter(errors));
             log.error("send email to " + sendMailRequest.getEmail() + " failed: " + errors);
