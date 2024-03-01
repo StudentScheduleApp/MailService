@@ -32,13 +32,8 @@ public class MailController {
         }
         try {
             mailService.send(sendMailRequest);
-            log.info("send email to " + sendMailRequest.getEmail() + " success");
+            log.info("send email to " + sendMailRequest.getEmail());
             return ResponseEntity.ok().build();
-        } catch (MessagingException e) {
-            StringWriter errors = new StringWriter();
-            e.printStackTrace(new PrintWriter(errors));
-            log.error("send email to " + sendMailRequest.getEmail() + " failed: " + errors);
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         } catch (Exception e) {
             StringWriter errors = new StringWriter();
             e.printStackTrace(new PrintWriter(errors));

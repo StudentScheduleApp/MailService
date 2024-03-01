@@ -31,8 +31,8 @@ public class MailService {
         String from = properties.getProperty("mail.smtps.user");
         message.setFrom(new InternetAddress(from.substring(0, from.indexOf("@"))));
         message.addRecipient(Message.RecipientType.TO, new InternetAddress(sendMailRequest.getEmail()));
-        message.setSubject(sendMailRequest.getTitle());
-        message.setText(sendMailRequest.getBody());
+        message.setSubject(sendMailRequest.getTitle() == null ? "no title" : sendMailRequest.getTitle());
+        message.setText(sendMailRequest.getBody() == null ? "no body" : sendMailRequest.getBody());
 
         Transport tr = session.getTransport();
         tr.connect(null, properties.getProperty("mail.smtps.password"));
